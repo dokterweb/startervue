@@ -1,0 +1,21 @@
+@import "@tabler/core/dist/css/tabler.min.css";
+
+html,
+body,
+#app {
+    min-height: 100%;
+}
+
+.page {
+    min-height: 100vh;
+}
+
+.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-body {
+    flex: 1;
+}
