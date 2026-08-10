@@ -25,9 +25,11 @@
                     <!-- Dashboard -->
                     <li
                         class="nav-item"
-                        :class="{ active: isActive('/dashboard') }"
+                        :class="{
+                            active: isActive('/dashboard'),
+                        }"
                     >
-                        <Link href="/dashboard" class="nav-link">
+                        <Link :href="route('dashboard')" class="nav-link">
                             <span class="nav-link-icon">
                                 <IconLayoutDashboard
                                     :size="20"
@@ -48,10 +50,13 @@
 
                     <!-- Users -->
                     <li
+                        v-if="can('users.view')"
                         class="nav-item"
-                        :class="{ active: isActive('/users') }"
+                        :class="{
+                            active: isActive('/users'),
+                        }"
                     >
-                        <Link href="/users" class="nav-link">
+                        <Link :href="route('users.index')" class="nav-link">
                             <span class="nav-link-icon">
                                 <IconUsers :size="20" stroke-width="1.5" />
                             </span>
@@ -62,10 +67,13 @@
 
                     <!-- Roles -->
                     <li
+                        v-if="can('roles.view')"
                         class="nav-item"
-                        :class="{ active: isActive('/roles') }"
+                        :class="{
+                            active: isActive('/roles'),
+                        }"
                     >
-                        <Link href="/roles" class="nav-link">
+                        <Link :href="route('roles.index')" class="nav-link">
                             <span class="nav-link-icon">
                                 <IconShieldCheck
                                     :size="20"
@@ -79,10 +87,16 @@
 
                     <!-- Permissions -->
                     <li
+                        v-if="can('permissions.view')"
                         class="nav-item"
-                        :class="{ active: isActive('/permissions') }"
+                        :class="{
+                            active: isActive('/permissions'),
+                        }"
                     >
-                        <Link href="/permissions" class="nav-link">
+                        <Link
+                            :href="route('permissions.index')"
+                            class="nav-link"
+                        >
                             <span class="nav-link-icon">
                                 <IconLock :size="20" stroke-width="1.5" />
                             </span>
@@ -100,10 +114,13 @@
 
                     <!-- Transaksi -->
                     <li
+                        v-if="can('transaksi.view')"
                         class="nav-item"
-                        :class="{ active: isActive('/transaksi') }"
+                        :class="{
+                            active: isActive('/transaksi'),
+                        }"
                     >
-                        <Link href="/transaksi" class="nav-link">
+                        <Link :href="route('transaksi.index')" class="nav-link">
                             <span class="nav-link-icon">
                                 <IconFileInvoice
                                     :size="20"
@@ -117,10 +134,16 @@
 
                     <!-- Pembayaran -->
                     <li
+                        v-if="can('pembayaran.view')"
                         class="nav-item"
-                        :class="{ active: isActive('/pembayaran') }"
+                        :class="{
+                            active: isActive('/pembayaran'),
+                        }"
                     >
-                        <Link href="/pembayaran" class="nav-link">
+                        <Link
+                            :href="route('pembayaran.index')"
+                            class="nav-link"
+                        >
                             <span class="nav-link-icon">
                                 <IconCash :size="20" stroke-width="1.5" />
                             </span>
@@ -131,10 +154,13 @@
 
                     <!-- Laporan -->
                     <li
+                        v-if="can('laporan.view')"
                         class="nav-item"
-                        :class="{ active: isActive('/laporan') }"
+                        :class="{
+                            active: isActive('/laporan'),
+                        }"
                     >
-                        <Link href="/laporan" class="nav-link">
+                        <Link :href="route('laporan.index')" class="nav-link">
                             <span class="nav-link-icon">
                                 <IconReportAnalytics
                                     :size="20"
@@ -155,10 +181,13 @@
 
                     <!-- Settings -->
                     <li
+                        v-if="can('settings.view')"
                         class="nav-item"
-                        :class="{ active: isActive('/settings') }"
+                        :class="{
+                            active: isActive('/settings'),
+                        }"
                     >
-                        <Link href="/settings" class="nav-link">
+                        <Link :href="route('settings.index')" class="nav-link">
                             <span class="nav-link-icon">
                                 <IconSettings :size="20" stroke-width="1.5" />
                             </span>
@@ -173,7 +202,7 @@
 </template>
 
 <script setup>
-import { Link } from "@inertiajs/vue3";
+import { usePage, Link } from "@inertiajs/vue3";
 
 import {
     IconLayoutDashboard,
@@ -186,7 +215,13 @@ import {
     IconSettings,
 } from "@tabler/icons-vue";
 
+import { usePermission } from "@/Composables/usePermission";
+
+const page = usePage();
+
+const { can } = usePermission();
+
 const isActive = (path) => {
-    return window.location.pathname.startsWith(path);
+    return page.url === path;
 };
 </script>

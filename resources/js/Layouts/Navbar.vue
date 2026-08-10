@@ -23,45 +23,68 @@
                         data-bs-toggle="dropdown"
                         aria-label="Open user menu"
                     >
-                        <span class="avatar avatar-sm"> U </span>
+                        <!-- Avatar -->
+                        <span class="avatar avatar-sm">
+                            {{ user?.name?.charAt(0)?.toUpperCase() ?? "U" }}
+                        </span>
 
+                        <!-- User information -->
                         <div class="d-none d-xl-block ps-2">
-                            <div>User</div>
+                            <div>
+                                {{ user?.name ?? "User" }}
+                            </div>
 
                             <div class="mt-1 small text-secondary">
-                                Administrator
+                                {{ user?.email ?? "" }}
                             </div>
                         </div>
                     </a>
 
+                    <!-- Dropdown -->
                     <div
                         class="dropdown-menu dropdown-menu-end dropdown-menu-arrow"
                     >
-                        <a class="dropdown-item" href="#">
+                        <!-- Profile -->
+                        <Link
+                            :href="route('profile.edit')"
+                            class="dropdown-item"
+                        >
                             <IconUser
                                 class="icon dropdown-item-icon"
                                 :size="18"
                             />
-                            Profile
-                        </a>
 
-                        <a class="dropdown-item" href="#">
+                            Profile
+                        </Link>
+
+                        <!-- Settings -->
+                        <Link
+                            :href="route('settings.index')"
+                            class="dropdown-item"
+                        >
                             <IconSettings
                                 class="icon dropdown-item-icon"
                                 :size="18"
                             />
+
                             Settings
-                        </a>
+                        </Link>
 
                         <div class="dropdown-divider"></div>
 
-                        <a class="dropdown-item" href="#">
+                        <!-- Logout -->
+                        <button
+                            type="button"
+                            class="dropdown-item"
+                            @click="logout"
+                        >
                             <IconLogout
                                 class="icon dropdown-item-icon"
                                 :size="18"
                             />
+
                             Logout
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -70,5 +93,16 @@
 </template>
 
 <script setup>
+import { computed } from "vue";
+import { Link, router, usePage } from "@inertiajs/vue3";
+
 import { IconUser, IconSettings, IconLogout } from "@tabler/icons-vue";
+
+const page = usePage();
+
+const user = computed(() => page.props.auth?.user);
+
+const logout = () => {
+    router.post(route("logout"));
+};
 </script>

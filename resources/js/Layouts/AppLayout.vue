@@ -18,10 +18,12 @@
             <!-- Footer -->
             <Footer />
         </div>
+        <ToastNotification />
     </div>
 </template>
 
 <script setup>
+import ToastNotification from "@/Components/ToastNotification.vue";
 import Sidebar from "./Sidebar.vue";
 import Navbar from "./Navbar.vue";
 import Footer from "./Footer.vue";
