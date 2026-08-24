@@ -39,13 +39,21 @@ class HandleInertiaRequests extends Middleware
                             ->getRoleNames()
                             ->values(),
     
-                        'permissions' => $request->user()
+                        /* 'permissions' => $request->user()
                             ->getAllPermissions()
                             ->pluck('name')
-                            ->values(),
+                            ->values(), */
     
+                        'permissions' => $request->user()
+                        ? $request->user()
+                            ->getAllPermissions()
+                            ->pluck('name')
+                            ->values()
+                            ->toArray()
+                        : [],
                         'is_superadmin' => $request->user()
-                            ->hasRole('superadmin'),
+                        ? $request->user()->hasRole('superadmin')
+                        : false,
                     ]
                     : null,
             ],
